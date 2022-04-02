@@ -1,6 +1,8 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 /.env
 /.vscode
-/__init__.py
-/base
 /init
-/test
