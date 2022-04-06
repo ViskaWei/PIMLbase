@@ -24,6 +24,10 @@ class BaseModelOperation(BaseOperation):
         super().perform(data)
 
 
+class LogOperation(BaseOperation):
+    def perform(self, flux):
+        return np.log(flux)
+        
 class SelectOperation(BaseOperation):
     """ class for selective process. """
     def __init__(self, IdxSelected) -> None:
@@ -54,8 +58,8 @@ class SplitOperation(BaseOperation):
         else:
             return data[..., split_idxs[0]:split_idxs[1]]
 
-class CoordxifyOperation(BaseOperation):
-    def __init__(self, origin, tick) -> None:
+class PolarScaleOperation(BaseOperation):
+    def __init__(self, origin, tick=1) -> None:
         self.origin = origin
         self.tick = tick
 
@@ -66,15 +70,6 @@ class CoordxifyOperation(BaseOperation):
     def perform(self, coord):
         self.get_scalers()
         return self.scaler(coord)
-
-class ApplyInterpOperation(BaseOperation):
-    def __init__(self, interpolator, rescaler=None) -> None:
-        self.interpolator = interpolator
-        self.rescaler = rescaler
-
-    def perform(self, data):
-        coordx = data if self.rescaler is None else self.rescaler(data)
-        return self.interpolator(coordx)
 
 class SamplingOperation(BaseOperation):
     def __init__(self, method):
