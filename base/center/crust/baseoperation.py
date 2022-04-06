@@ -2,7 +2,7 @@ import numpy as np
 
 from abc import ABC, abstractmethod
 from .basemodel import BaseModel
-from base.core.basesampler import SamplerBuilder
+from base.center.core.basesampler import SamplerBuilder
 
 class BaseOperation(ABC):
     """ Base class for Process. """
