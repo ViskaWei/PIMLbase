@@ -45,7 +45,7 @@ class DictLoader(BaseDictLoader):
     @staticmethod
     def _get_arg(f, arg):
         if DictLoader._is_arg(f, arg):
-            return f[arg][:]
+            return f[arg][()]
         else:
             raise KeyError(f"{arg} not in file")
 
@@ -53,7 +53,7 @@ class DictLoader(BaseDictLoader):
     def _get_args(f):
         DArgvals = {}
         for arg in f.keys():
-            DArgvals[arg] = f[arg][:] 
+            DArgvals[arg] = f[arg][()] 
         return DArgvals
 
 class H5pyLoader(DictLoader):

@@ -1,9 +1,7 @@
-import os
-import numpy as np
 import h5py
 import zarr
 import pickle
-import logging
+import numpy as np
 from abc import ABC, abstractmethod
 
 class BaseStorer(ABC):
@@ -20,7 +18,6 @@ class PickleStorer(BaseStorer):
 class NpStorer(BaseStorer):
     def store(self, PATH, val):
         np.save(PATH, val)
-
 
 
 class BaseDictStorer(ABC):
@@ -40,13 +37,17 @@ class DictStorer(BaseDictStorer):
 class H5pyStorer(DictStorer):
     def store_arg(self, PATH, arg, val):
         with h5py.File(PATH, 'a') as f:
-            f.create_dataset(arg, data=val, shape=val.shape)
+            self.store(arg, val, f)
 
     def store_dict_args(self, PATH, DArgs):
         with h5py.File(PATH, 'w') as f:    
             for arg, val in DArgs.items():
-                f.create_dataset(arg, data=val, shape=val.shape)
-        
+                self.store(arg, val, f)
+                
+    def store(self, arg, val, f):
+        val_shape = val.shape if isinstance(val, np.ndarray) else None
+        f.create_dataset(arg, data=val, shape=val_shape)
+
 class ZarrStorer(DictStorer):
     def store_arg(self, PATH, arg, val):
         with zarr.open(PATH, 'a') as f:
