@@ -1,6 +1,6 @@
 import os
 from abc import ABC, abstractmethod
-from baseIF.surface.IO.basestorer import NpStorer, PickleStorer, H5pyStorer, ZarrStorer
+from base.interface.surface.IO.basestorer import NpStorer, PickleStorer, H5pyStorer, ZarrStorer
 
 class BaseStorerIF(ABC):
     @abstractmethod

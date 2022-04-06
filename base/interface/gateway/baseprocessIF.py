@@ -41,14 +41,14 @@ class ProcessIF(BaseProcessIF):
         self.Object = self.Loader.load()
 
     def setup(self, PARAM):
-        self.set_data(PARAM["data"])
-        self.set_param(PARAM["op"])
-        self.set_model(PARAM["model"])
+        self.set_data(PARAM["DATA"])
+        self.set_param(PARAM["OP"])
+        self.set_model(PARAM["MODEL"])
         if "out" in PARAM:
-            self.set_out(PARAM["out"])
+            self.set_out(PARAM["OUT"])
 
     def interact(self, PARAM):
-        self.set_object(PARAM["object"])
+        self.set_object(PARAM["OBJECT"])
         self.setup(PARAM)
         self.interact_on_Object(self.Object)
     

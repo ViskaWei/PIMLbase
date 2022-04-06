@@ -1,6 +1,6 @@
 import os
 from abc import ABC, abstractmethod
-from baseIF.surface.IO.baseloader import H5pyLoader, NpLoader, PickleLoader, ZarrLoader
+from base.interface.surface.IO.baseloader import H5pyLoader, NpLoader, PickleLoader, ZarrLoader
 
 class BaseLoaderIF(ABC):
     @abstractmethod
@@ -46,6 +46,7 @@ class DictLoaderIF(PathLoaderIF):
 
 #-----------------------------------------------------------------------------
 class ObjectLoaderIF(ABC):
+    required_attributes = ["loader"]
     @abstractmethod
     def set_param(self, PARAM):
         pass
