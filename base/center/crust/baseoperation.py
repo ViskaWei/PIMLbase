@@ -19,15 +19,13 @@ class BaseModelOperation(BaseOperation):
     def set_model(self, model_type) -> BaseModel:
         pass
 
-    @abstractmethod
     def perform(self, data):
-        super().perform(data)
-
+        return self.model.apply(data)
 
 class LogOperation(BaseOperation):
     def perform(self, flux):
         return np.log(flux)
-        
+
 class SelectOperation(BaseOperation):
     """ class for selective process. """
     def __init__(self, IdxSelected) -> None:
