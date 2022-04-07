@@ -13,7 +13,10 @@ class BaseOperation(ABC):
 class BaseModelOperation(BaseOperation):
     def __init__(self, MODEL) -> None:
         self.model: BaseModel = self.set_model(MODEL["type"])
-        self.model.set_model_param(MODEL["param"])
+        if "param" in MODEL:
+            self.model.set_model_param(MODEL["param"])
+        else:
+            self.model.set_model_param()
 
     @abstractmethod
     def set_model(self, model_type) -> BaseModel:
