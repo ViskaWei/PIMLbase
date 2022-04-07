@@ -56,7 +56,7 @@ class SplitOperation(BaseOperation):
         else:
             return data[..., split_idxs[0]:split_idxs[1]]
 
-class PolarScaleOperation(BaseOperation):
+class BuildScalerOperation(BaseOperation):
     def __init__(self, origin, tick=1) -> None:
         self.origin = origin
         self.tick = tick
