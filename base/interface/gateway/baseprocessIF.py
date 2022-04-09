@@ -2,21 +2,15 @@ from abc import ABC, abstractmethod
 from ...center.crust.baseprocess import Process
 from .baseloaderIF import ObjectLoaderIF
 from .basestorerIF import BaseStorerIF
-
+from .baseparamIF import BaseParamIF
 
 class BaseProcessIF(ABC):
     """ Base class for Process interface for data. """
     @abstractmethod
-    def set_data(self, DATA_PARAM):
+    def set_object(self, OBJECT):
         pass
     @abstractmethod
     def set_param(self, OP_PARAM):
-        pass
-    @abstractmethod
-    def set_model(self, MODEL_TYPES):
-        pass
-    @abstractmethod
-    def set_out(self, out):
         pass
     @abstractmethod
     def interact(self, param, data):
@@ -32,6 +26,7 @@ class ProcessIF(BaseProcessIF):
         self.OP_DATA : dict = {}
         self.OP_OUT  : dict = {}
         
+        self.paramIF: BaseParamIF = None        
         self.Loader : ObjectLoaderIF = None
         self.Storer : BaseStorerIF = None
         self.Process: Process = None 
@@ -40,12 +35,9 @@ class ProcessIF(BaseProcessIF):
         self.Loader.set_param(OBJECT_PARAM)
         self.Object = self.Loader.load()
 
-    def setup(self, PARAM):
-        self.set_data(PARAM["DATA"])
-        self.set_param(PARAM["OP"])
-        self.set_model(PARAM["MODEL"])
-        if "out" in PARAM:
-            self.set_out(PARAM["OUT"])
+    def set_param(self, PARAM):
+        self.paramIF.set_param(PARAM)
+        self.PARAM = self.paramIF.get()
 
     def interact(self, PARAM):
         self.set_object(PARAM["OBJECT"])

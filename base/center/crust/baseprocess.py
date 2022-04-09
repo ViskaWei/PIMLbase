@@ -16,7 +16,7 @@ class Process(BaseProcess):
     def __init__(self) -> None:
         self.operation_list: list[BaseOperation] = None
 
-    def set_process(self, PARAM, MODEL, DATA):
+    def set_process(self, OP, MODEL, DATA):
         self.operation_list = []
 
     def start(self, BaseData: BaseData):
