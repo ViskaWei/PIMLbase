@@ -43,3 +43,21 @@ class ParamIF(BaseParamIF):
             return args[name]
         else:
             return old_args
+
+class MultiParamIF(ParamIF):
+    def __init__(self):
+        super().__init__()
+        self.paramIF_list:ParamIF =[]
+
+    def set_param(self, PARAM):
+        for paramIF in self.paramIF_list:
+            paramIF.set_param(PARAM)
+            self.merge(paramIF)
+
+    def merge(self, new_dict):
+        self.OBJECT.update(new_dict.OBJECT)
+        self.OP    .update(new_dict.OP)
+        self.MODEL .update(new_dict.MODEL)
+        self.DATA  .update(new_dict.DATA)
+        self.OUT   .update(new_dict.OUT)
+
