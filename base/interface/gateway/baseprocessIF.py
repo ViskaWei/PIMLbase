@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from ...center.crust.baseprocess import Process
 from .baseloaderIF import ObjectLoaderIF
 from .basestorerIF import BaseStorerIF
-from .baseparamIF import BaseParamIF
+from .baseparamIF import ParamIF
 
 class BaseProcessIF(ABC):
     """ Base class for Process interface for data. """
@@ -21,12 +21,7 @@ class BaseProcessIF(ABC):
 
 class ProcessIF(BaseProcessIF):
     def __init__(self) -> None:
-        self.OP_PARAM: dict = {}
-        self.OP_MODEL: dict = {}
-        self.OP_DATA : dict = {}
-        self.OP_OUT  : dict = {}
-        
-        self.paramIF: BaseParamIF = None        
+        self.paramIF: ParamIF = None        
         self.Loader : ObjectLoaderIF = None
         self.Storer : BaseStorerIF = None
         self.Process: Process = None 
@@ -40,16 +35,16 @@ class ProcessIF(BaseProcessIF):
         self.PARAM = self.paramIF.get()
 
     def interact(self, PARAM):
-        self.set_object(PARAM["OBJECT"])
-        self.setup(PARAM)
+        self.set_param(PARAM)
+        self.set_object(self.PARAM["OBJECT"])
         self.interact_on_Object(self.Object)
     
     def interact_on_Object(self, Object):
-        self.Process.set_process(self.OP_PARAM, self.OP_MODEL, self.OP_DATA)
+        self.Process.set_process(self.PARAM["OP"], self.PARAM["MODEL"], self.PARAM["DATA"])
         self.Process.start(Object)
 
-    def set_out(self, PARAM):
-        self.OP_OUT = PARAM
+    def set_out(self):
+        out = self.PARAM["OUT"]
 
     def finish(self, store_path):
         # store
