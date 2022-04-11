@@ -10,8 +10,6 @@ class BaseModel(ABC):
     def apply(self):
         pass
 
-
-
 class RBFInterpBuilderModel(BaseModel):
     def set_model_param(self, kernel="gaussian", epsilon=0.5):
         self.builder = RBFInterpBuilder(kernel, epsilon) 

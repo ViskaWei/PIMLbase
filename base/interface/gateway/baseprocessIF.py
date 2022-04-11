@@ -21,7 +21,7 @@ class BaseProcessIF(ABC):
 
 class ProcessIF(BaseProcessIF):
     def __init__(self) -> None:
-        self.ParamIF: ParamIF = None        
+        self.Param: ParamIF = None        
         self.Loader : ObjectLoaderIF = None
         self.Storer : BaseStorerIF = None
         self.Process: Process = None 
@@ -31,10 +31,10 @@ class ProcessIF(BaseProcessIF):
         self.Object = self.Loader.load()
 
     def set_param(self, PARAM):
-        self.ParamIF.set_param(PARAM)
-        self.PARAM = self.ParamIF.get()
+        self.Param.set_param(PARAM)
+        self.PARAM = self.Param.get()
 
-    def interact(self, PARAM):
+    def interact(self, PARAM={}):
         self.set_param(PARAM)
         self.set_object(self.PARAM["OBJECT"])
         self.interact_on_Object(self.Object)
