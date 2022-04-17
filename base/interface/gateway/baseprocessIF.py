@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from ...center.crust.baseprocess import Process
 from .baseloaderIF import ObjectLoaderIF
-from .basestorerIF import BaseStorerIF
+from .basestorerIF import ObjectStorerIF
 from .baseparamIF import ParamIF
 
 class BaseProcessIF(ABC):
@@ -23,7 +23,7 @@ class ProcessIF(BaseProcessIF):
     def __init__(self) -> None:
         self.Param: ParamIF = None        
         self.Loader : ObjectLoaderIF = None
-        self.Storer : BaseStorerIF = None
+        self.Storer : ObjectStorerIF = None
         self.Process: Process = None 
 
     def set_object(self, OBJECT_PARAM):
@@ -43,8 +43,10 @@ class ProcessIF(BaseProcessIF):
         self.Process.set_process(self.PARAM["OP"], self.PARAM["MODEL"], self.PARAM["DATA"])
         self.Process.start(Object)
 
-    def set_out(self):
-        out = self.PARAM["OUT"]
+    def store_out(self, PARAM=None):
+        if PARAM is None : PARAM = self.PARAM["out"]
+        self.Storer.set_param(PARAM)
+        self.Storer.store(self.Object)
 
     def finish(self, store_path):
         # store
